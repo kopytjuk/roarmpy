@@ -32,12 +32,15 @@ L5 = _L_MM["L5"] / _MM_TO_M
 
 
 # Home (zero) end-effector pose: 4x4 homogeneous transform
+# The robot is in its Γ position with the end-effector frame located
+# at the tip of the robot with x,y,z axes in the same direction as the base-frame
 M: np.ndarray = np.eye(4, dtype=float)
 M[:3, 3] = [L2B + L3 + L4A + L5, 0.0, L1 + L2A - L4B]
 
 
 def _screw_axis(omega: np.ndarray, q: np.ndarray) -> np.ndarray:
-    """Return a 6-vector screw axis (omega, v) given omega and a point q.
+    """Return a 6-vector screw axis (omega, v) given omega (rotation vector)
+    and a point q.
 
     v = -omega x q (so we compute cross(-omega, q)).
     """
