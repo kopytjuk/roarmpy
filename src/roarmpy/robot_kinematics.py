@@ -1,4 +1,6 @@
 
+from typing import Tuple
+
 import modern_robotics as mr
 import numpy as np
 
@@ -6,7 +8,7 @@ from roarmpy.robots.robot_spec import RobotSpecification
 from roarmpy.utils import normalize_angles
 
 
-class RobotArm:
+class RobotArmKinematics:
 
     def __init__(self, robot_spec: RobotSpecification):
         self._robot_spec = robot_spec
@@ -36,7 +38,7 @@ class RobotArm:
     def inverse_kinematics(
         self, end_effector_pose: np.ndarray, theta_0: np.ndarray | None = None,
         solver_args: dict | None = None
-    ) -> tuple[np.ndarray, bool]:
+    ) -> Tuple[np.ndarray, bool]:
         """Compute the joint angles from a desired end-effector pose using `mr.IKinSpace`.
 
         Args:
@@ -58,8 +60,8 @@ class RobotArm:
             solver_args = dict(eomg=0.001, ev=0.001)
 
         theta_result, success = mr.IKinSpace(
-            self.screw_axes_matrix,
-            self.end_effector_zero_config,
+            self._robot_spec.screw_axes_matrix,
+            self._robot_spec.end_effector_zero_config,
             end_effector_pose,
             theta_0,
             **solver_args

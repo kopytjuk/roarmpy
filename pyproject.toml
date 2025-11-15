@@ -19,6 +19,7 @@ dependencies = [
     "pyserial>=3.0; python_version >= \"3.9\"",
     "requests>=2.32.5",
     "requests>=2.32.4; python_version >= \"3.9\"",
+    "scipy>=1.13.1",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
