@@ -1,5 +1,7 @@
 # roarmpy
 
+> This project is currently in development, however feel free to fork, raise issues or create PRs!
+
 ![logo](docs/logo_small.png)
 
 A minimal Python library to interface RoArm robot arms.
