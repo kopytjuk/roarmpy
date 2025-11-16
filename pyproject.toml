@@ -4,7 +4,7 @@ build-backend = "uv_build"
 
 [project]
 name = "roarmpy"
-version = "0.0.3"
+version = "0.0.4"
 description = "Python library to interface RoArm robot arms"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -55,9 +55,26 @@ raspberry-pi = [
 dev = [
     "ipykernel>=6.31.0",
     "matplotlib>=3.9.4",
+    "pre-commit>=4.3.0",
     "pytest>=8.3.5",
     "pytransform3d>=3.14.3",
+    "ruff>=0.14.5",
 ]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+exclude = [
+    "*.ipynb",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "I"]  # example rules
+ignore = ["E501", "F401"]              # ignore line-length if you want
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
 
 [[tool.uv.index]]
 name = "testpypi"

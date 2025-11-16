@@ -40,15 +40,15 @@ class RoArmClient:
         roll_rad: float = 0.0,
         speed: float | None = 0.25,
     ):
-        T_target = transform_from_pose(x, y, z, roll_rad, pitch_rad, yaw_rad = 0.0)
+        T_target = transform_from_pose(x, y, z, roll_rad, pitch_rad, yaw_rad=0.0)
 
         joint_angles, success = self._kinematics.inverse_kinematics(T_target)
 
         if not success:
             print("Movement not possible")
             return
-        
-        self.set_joint_angles(*joint_angles)
+
+        self.set_joint_angles(*joint_angles, speed=speed)
 
     def move_to_internal(
         self,
