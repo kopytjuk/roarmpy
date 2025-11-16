@@ -4,6 +4,7 @@ This module defines the zero (home) end-effector pose `M`, the screw
 axes matrix `S` and the axis points `Q_list` for the RoArm-M3 Pro.
 """
 
+import math
 from typing import List
 
 import numpy as np
@@ -54,27 +55,39 @@ def _screw_axis(omega: np.ndarray, q: np.ndarray) -> np.ndarray:
 
 q_1 = np.array([0.0, 0.0, 0.0])
 S1 = np.array([0.0, 0.0, 1.0, 0.0, 0.0, 0.0])
+joint_limit_1 = (-math.pi, math.pi)
 
 omega_2 = np.array([0.0, 1.0, 0.0])
 q_2 = np.array([0.0, 0.0, L1])
 S2 = _screw_axis(omega_2, q_2)
+joint_limit_2 = (-math.pi/2, math.pi/2)
 
 omega_3 = np.array([0.0, 1.0, 0.0])
 q_3 = np.array([L2B, 0.0, L1 + L2A])
 S3 = _screw_axis(omega_3, q_3)
+joint_limit_3 = (-math.pi/2, math.pi/2)
 
 omega_4 = np.array([0.0, 1.0, 0.0])
 q_4 = np.array([L2B + L3, 0.0, L1 + L2A])
 S4 = _screw_axis(omega_4, q_4)
+joint_limit_4 = (-math.pi/2, math.pi/2)
 
 omega_5 = np.array([1.0, 0.0, 0.0])
 q_5 = np.array([L2B + L3 + L4A, 0.0, L1 + L2A - L4B])
 S5 = _screw_axis(omega_5, q_5)
-
+joint_limit_5 = (-math.pi/2, math.pi/2)
 
 Q_list: List[np.ndarray] = [q_1, q_2, q_3, q_4, q_5]
 S_list: List[np.ndarray] = [S1, S2, S3, S4, S5]
 
 S = np.column_stack(S_list)
 
-__all__ = ["M", "S", "Q_list", "S_list"]
+joint_limits = [
+    joint_limit_1,
+    joint_limit_2,
+    joint_limit_3,
+    joint_limit_4,
+    joint_limit_5,
+]
+
+__all__ = ["M", "S", "Q_list", "S_list", "joint_limits"]

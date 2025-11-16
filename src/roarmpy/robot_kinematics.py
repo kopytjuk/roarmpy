@@ -1,5 +1,5 @@
 
-from typing import Tuple
+from typing import List, Tuple
 
 import modern_robotics as mr
 import numpy as np
@@ -37,6 +37,7 @@ class RobotArmKinematics:
 
     def inverse_kinematics(
         self, end_effector_pose: np.ndarray, theta_0: np.ndarray | None = None,
+        respect_joint_limits: bool = True,
         solver_args: dict | None = None
     ) -> Tuple[np.ndarray, bool]:
         """Compute the joint angles from a desired end-effector pose using `mr.IKinSpace`.
@@ -69,4 +70,16 @@ class RobotArmKinematics:
 
         theta_result = normalize_angles(theta_result)
 
+        if respect_joint_limits:
+            success = self._check_joint_limits(theta_result)
+
         return theta_result, success
+
+    def _check_joint_limits(self, theta_result: List[float]) -> bool:
+        joint_limits = self._robot_spec.joint_limits
+
+        for i in range(self.num_joints):
+            lower_limit, upper_limit = joint_limits[i]
+            if not (lower_limit <= theta_result[i] <= upper_limit):
+                return False
+        return True

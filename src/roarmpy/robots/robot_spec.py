@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List
+from typing import List, Tuple
 
 import numpy as np
 
@@ -9,6 +9,7 @@ class RobotSpecification:
     name: str
     M: np.ndarray
     Slist: List[np.ndarray]
+    joint_limits: List[Tuple[float]]
 
     @property
     def end_effector_zero_config(self) -> np.ndarray:
