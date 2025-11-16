@@ -32,3 +32,11 @@ time.sleep(3.0)
 
 robot_handle.go_home()
 ```
+
+## Installation instructions
+
+To install from `test.pypi.org`:
+
+```shell
+pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple roarmpy
+```
